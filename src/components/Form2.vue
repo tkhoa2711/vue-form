@@ -3,10 +3,11 @@
     <div class="content">
       <div class="ui form">
         <div class="field">
-          <label>User lookup</label>
-          <!-- This field should send a request to https://randomuser.me/api/?results=50&nat=au&exc=login
-          as the user types and populate an autocomplete widget. The widget should highlight matches based the name field.
-          -->
+          <label>Name lookup</label>
+          <autocomplete
+            :items="users"
+            v-on:select-result="onFullNameSelected"
+          ></autocomplete>
         </div>
         <div class="field">
           <label>First Name</label>
@@ -30,12 +31,29 @@
 </template>
 
 <script>
+import Autocomplete from './Autocomplete';
+
 export default {
   data() {
     return {
+      search: '',
+      users: [],
       firstName: '',
       lastName: '',
     };
+  },
+
+  components: {
+    Autocomplete,
+  },
+
+  mounted() {
+    fetch('https://randomuser.me/api/?results=50&nat=au&exc=login')
+      .then(res => res.json())
+      .then(res => {
+        this.users = res.results.map(u => `${u.name.first} ${u.name.last}`);
+      })
+      .catch(() => {});
   },
 
   methods: {
@@ -45,7 +63,11 @@ export default {
 
     submit() {
       // TODO
-    }
+    },
+
+    onFullNameSelected(name) {
+      [this.firstName, this.lastName] = name.split(' ', 2);
+    },
   },
 }
 </script>
