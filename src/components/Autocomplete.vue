@@ -4,7 +4,8 @@
       type="text"
       placeholder="Search here..."
       v-model="search"
-      @input="onChange"
+      @input="onInput"
+      @change="onChange"
       @keydown.down="onArrowDown"
       @keydown.up="onArrowUp"
       @keydown.enter="onEnter"
@@ -62,9 +63,14 @@ export default {
   },
 
   methods: {
-    onChange() {
+    onInput() {
       this.filterResults();
       this.isOpen = true;
+      this.$emit('input', this.search);
+    },
+
+    onChange() {
+      this.$emit('change', this.search);
     },
 
     onArrowDown() {
@@ -83,7 +89,7 @@ export default {
       this.search = this.results[this.arrowCounter];
       this.isOpen = false;
       this.arrowCounter = -1;
-      this.$emit('select-result', this.search);
+      this.onChange();
     },
 
     filterResults() {
@@ -95,7 +101,7 @@ export default {
     selectResult(result) {
       this.search = result;
       this.isOpen = false;
-      this.$emit('select-result', this.search);
+      this.onChange();
     },
 
     handleClickOutside(e) {

@@ -37,7 +37,7 @@
             <label>Name lookup</label>
             <autocomplete
               :items="users"
-              @select-result="onFullNameSelected"
+              @change="onFullNameSelected"
             ></autocomplete>
             <div class="ui pointing red basic label" v-show="errors['fullName']">
               {{ errors['fullName'] }}
@@ -116,6 +116,7 @@ export default {
     },
 
     onFullNameSelected(name) {
+      this.fullName = name;
       [this.firstName, this.lastName] = name.split(' ', 2);
     },
 
@@ -131,10 +132,9 @@ export default {
         this.errors['storeDetail'] = 'Store details are required for Metro type';
       }
 
-      // TODO: fix requirement for full name
-      // if (!this.fullName) {
-      //   this.errors['fullName'] = 'Full name is required';
-      // }
+      if (!this.fullName) {
+        this.errors['fullName'] = 'Full name is required';
+      }
 
       if (!this.firstName) {
         this.errors['firstName'] = 'First name is required';
