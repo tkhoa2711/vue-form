@@ -128,7 +128,7 @@ export default {
 
     submit() {
       if (this.validateForm()){
-        fetch('https://webhook.site/9140be1b-73f2-4003-8aee-b882a75469e4', {
+        fetch(process.env.VUE_APP_SUBMIT_FORM_URL, {
           method: 'POST',
           mode: 'no-cors', // opage request to bypass CORS restriction by browser
           headers: {
