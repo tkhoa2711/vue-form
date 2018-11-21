@@ -3,7 +3,7 @@
     <h1 class="ui header">Page 1</h1>
 
     <div class="content">
-      <form class="ui form">
+      <div class="ui form">
         <!-- Store info -->
         <fieldset class="ui segment fields">
           <div class="field">
@@ -69,13 +69,14 @@
             Next
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Autocomplete from './Autocomplete';
+import { mapFields } from 'vuex-map-fields';
 
 export default {
   components: {
@@ -90,14 +91,19 @@ export default {
         'Arcade',
         'Centre',
       ],
-      storeType: '',
-      storeDetail: '',
       users: [],
-      fullName: '',
-      firstName: '',
-      lastName: '',
       errors: {},       // for form validation
     };
+  },
+
+  computed: {
+    ...mapFields([
+      'form.storeType',
+      'form.storeDetail',
+      'form.fullName',
+      'form.firstName',
+      'form.lastName',
+    ]),
   },
 
   mounted() {
@@ -111,8 +117,9 @@ export default {
 
   methods: {
     next() {
-      if (this.validateForm())
+      if (this.validateForm()) {
         this.$router.push('/form2');
+      }
     },
 
     onFullNameSelected(name) {

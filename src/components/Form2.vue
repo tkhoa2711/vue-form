@@ -1,7 +1,7 @@
 <template>
   <div class="ui centered card">
     <div class="content">
-      <form class="ui form">
+      <div class="ui form">
         <h2 class="ui dividing header">Page 2</h2>
 
         <!-- user role -->
@@ -21,6 +21,7 @@
         <!-- first joining date -->
         <div class="field">
           <label>When did the user first join?</label>
+          <!-- TODO: date input control is not supported in IE and Safari, will fallback to text -->
           <input type="date" v-model="joinDate">
           <div class="ui pointing red basic label" v-show="errors['joinDate']">
             {{ errors['joinDate'] }}
@@ -62,6 +63,7 @@
           </div>
         </div>
 
+        <!-- control buttons -->
         <div class="ui buttons">
           <button class="ui button" @click="back">
             Back
@@ -70,12 +72,28 @@
             Submit
           </button>
         </div>
-      </form>
+      </div>
+
+      <!-- submission status message -->
+      <div class="ui basic green message" v-show="submitStatus === Status.SUCCESS">
+        Form was successfully submitted
+      </div>
+      <div class="ui basic red message" v-show="submitStatus === Status.ERROR">
+        There was error while submitting the form
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapFields } from 'vuex-map-fields';
+
+const Status = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  SUCCESS: 'SUCCESS',
+  ERROR: 'ERROR',
+};
+
 export default {
   data() {
     return {
@@ -84,12 +102,23 @@ export default {
         'Manager',
         'Student',
       ],
-      role: null,
-      joinDate: null,
-      isLocatedInVic: null,
-      locationInVic: '',
+      submitStatus: Status.NOT_SUBMITTED,
       errors: {},
     };
+  },
+
+  computed: {
+    ...mapFields([
+      'form.role',
+      'form.joinDate',
+      'form.isLocatedInVic',
+      'form.locationInVic',
+    ]),
+  },
+
+  created() {
+    // make the constants available to the template
+    this.Status = Status;
   },
 
   methods: {
@@ -99,7 +128,18 @@ export default {
 
     submit() {
       if (this.validateForm()){
-        // TODO
+        fetch('https://webhook.site/9140be1b-73f2-4003-8aee-b882a75469e4', {
+          method: 'POST',
+          mode: 'no-cors', // opage request to bypass CORS restriction by browser
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          body: JSON.stringify(this.$store.state.form),
+        }).then(() => {
+          this.submitStatus = Status.SUCCESS;
+        }).catch(() => {
+          this.submitStatus = Status.ERROR;
+        });
       }
     },
 
