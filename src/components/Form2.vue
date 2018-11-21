@@ -154,7 +154,7 @@ export default {
         this.errors['isLocatedInVic'] = 'You must select your location';
       }
 
-      if (!this.locationInVic) {
+      if (this.isLocatedInVic && !this.locationInVic) {
         this.errors['locationInVic'] = 'Please specify where in Victoria';
       }
 
