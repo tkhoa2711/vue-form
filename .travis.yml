@@ -4,5 +4,18 @@ node_js:
   - "9"
   - "10"
   - "node"
-script:
-  - yarn build
+stages:
+  - lint
+  - test
+  - build
+jobs:
+  include:
+    - stage: lint
+      script:
+        - yarn lint
+    - stage: test
+      script:
+        - yarn test
+    - stage: build
+      script:
+        - yarn build
