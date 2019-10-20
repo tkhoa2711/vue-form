@@ -8085,10 +8085,10 @@ semantic-ui-css@^2.4.1:
   dependencies:
     jquery "^3.4.0"
 
-semantic-ui-vue@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/semantic-ui-vue/-/semantic-ui-vue-0.6.0.tgz#91d576dc3220ea2765e2d6171a061eed1869779d"
-  integrity sha512-MC6Av7uk45+TAyczaeUtAMSItTVo+WtJ36xFQOljCYEwobxcyr3C+KV8zwybWJY3uPM8kTS0nBJj67N5/wRNIA==
+semantic-ui-vue@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/semantic-ui-vue/-/semantic-ui-vue-0.8.1.tgz#ee443cf4a8f664b1976f255d85efb3fcc4c27675"
+  integrity sha512-ewur0XLCjTI/LBFHFzFQWx5Ke7MhsndpjojL3G9p+FtgUCjERKjO3+jKTXsfUL40IajZkzr04R1Hpz1QJ9YD+w==
   dependencies:
     babel-helper-vue-jsx-merge-props "^2.0.2"
     babel-runtime "^6.26.0"
