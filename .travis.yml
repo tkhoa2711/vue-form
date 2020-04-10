@@ -8,6 +8,7 @@ stages:
   - lint
   - test
   - build
+cache: yarn
 jobs:
   include:
     - stage: lint
