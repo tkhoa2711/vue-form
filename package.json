@@ -34,6 +34,9 @@
     "vue-jest": "^3.0.0",
     "vue-template-compiler": "^2.6.11"
   },
+  "resolutions": {
+    "@vue/cli-service/**/selfsigned": "^1.10.8"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
